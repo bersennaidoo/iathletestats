@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"net/http"
 
-	"gihub.com/bersennaidoo/iathletestats/backend/domain/models"
+	"github.com/bersennaidoo/iathletestats/backend/domain/models"
 )
 
 // RunnersRepo represents a type to perform crud operations for runners.
