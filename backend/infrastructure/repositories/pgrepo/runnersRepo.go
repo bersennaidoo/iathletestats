@@ -14,7 +14,7 @@ type RunnersRepo struct {
 	transaction *sql.Tx
 }
 
-// NewRunnersRepo create an instance of RunnersRepo initialized with a dbHandler.
+// NewRunnersRepo creates an instance of RunnersRepo initialized with a dbHandler.
 func NewRunnersRepo(dbHandler *sql.DB) *RunnersRepo {
 	return &RunnersRepo{
 		dbHandler: dbHandler,
