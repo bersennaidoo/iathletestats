@@ -2,9 +2,9 @@ package services
 
 import (
 	"net/http"
-	"runners-postgresql/models"
 	"testing"
 
+	"github.com/bersennaidoo/iathletestats/backend/domain/models"
 	"github.com/stretchr/testify/assert"
 )
 
