@@ -45,7 +45,7 @@ func (rr RunnersRepo) CreateRunner(runner *models.Runner) (*models.Runner,
 	var runnerId string
 
 	// rows.Next check for rows and if true then rows.Scan fetches id and parses into runnerId.
-	// The last runnerId scanned identified the runner insert into row.
+	// The last runnerId scanned identifies the runner insert into row.
 	for rows.Next() {
 		err := rows.Scan(&runnerId)
 		if err != nil {
