@@ -8,12 +8,12 @@ import (
 )
 
 type RunnersService struct {
-	runnersRep *pgrepo.RunnersRepo
+	runnersRepo *pgrepo.RunnersRepo
 }
 
-func NewRunnersService(runnersRep *pgrepo.RunnersRepo) *RunnersService {
+func NewRunnersService(runnersRepo *pgrepo.RunnersRepo) *RunnersService {
 	return &RunnersService{
-		runnersRep: runnersRep,
+		runnersRepo: runnersRepo,
 	}
 }
 
@@ -23,7 +23,7 @@ func (rs RunnersService) CreateRunner(runner *models.Runner) (*models.Runner, *m
 		return nil, responseErr
 	}
 
-	return rs.runnersRepository.CreateRunner(runner)
+	return rs.runnersRepo.CreateRunner(runner)
 }
 
 func validateRunner(runner *models.Runner) *models.ResponseError {
