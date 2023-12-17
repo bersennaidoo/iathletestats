@@ -20,6 +20,9 @@ SQLC_YAML ?= ./sqlc.yaml
 
 .PHONY : postgresup postgresdown psql createdb teardown_recreate generate
 
+go-run:
+	go run backend/cmd/main.go
+
 docker-start:
 	docker start iathletedb
 

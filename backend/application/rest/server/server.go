@@ -15,21 +15,29 @@ type HttpServer struct {
 	config         *viper.Viper
 	router         *gin.Engine
 	runnersHandler *handlers.RunnersHandler
+	usersHandler   *handlers.UsersHandler
 }
 
 func InitHttpServer(config *viper.Viper, dbHandler *sql.DB) HttpServer {
 	runnersRepo := pgrepo.NewRunnersRepo(dbHandler)
 	runnersService := services.NewRunnersService(runnersRepo)
-	runnersHandler := handlers.NewRunnersHandler(runnersService)
+	usersRepo := pgrepo.NewUsersRepo(dbHandler)
+	usersService := services.NewUsersService(usersRepo)
+	runnersHandler := handlers.NewRunnersHandler(runnersService, usersService)
+	usersHandler := handlers.NewUsersHandler(usersService)
 
 	router := gin.Default()
 
 	router.POST("/runner", runnersHandler.CreateRunner)
 
+	router.POST("/login", usersHandler.Login)
+	router.POST("/logout", usersHandler.Logout)
+
 	return HttpServer{
 		config:         config,
 		router:         router,
 		runnersHandler: runnersHandler,
+		usersHandler:   usersHandler,
 	}
 }
 

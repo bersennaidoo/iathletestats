@@ -17,17 +17,31 @@ const ROLE_RUNNER = "runner"
 
 type RunnersHandler struct {
 	runnersService *services.RunnersService
+	usersService   *services.UsersService
 }
 
-func NewRunnersHandler(runnersService *services.RunnersService) *RunnersHandler {
+func NewRunnersHandler(runnersService *services.RunnersService, usersService *services.UsersService) *RunnersHandler {
 	return &RunnersHandler{
 		runnersService: runnersService,
+		usersService:   usersService,
 	}
 }
 
 func (rc RunnersHandler) CreateRunner(ctx *gin.Context) {
 
 	metrics.HttpRequestsCounter.Inc()
+
+	accessToken := ctx.Request.Header.Get("Token")
+	auth, responseErr := rc.usersService.AuthorizeUser(accessToken, []string{ROLE_ADMIN})
+	if responseErr != nil {
+		ctx.JSON(responseErr.Status, responseErr)
+		return
+	}
+
+	if !auth {
+		ctx.Status(http.StatusUnauthorized)
+		return
+	}
 
 	body, err := io.ReadAll(ctx.Request.Body)
 	if err != nil {
