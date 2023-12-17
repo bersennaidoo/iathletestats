@@ -21,13 +21,13 @@ SQLC_YAML ?= ./sqlc.yaml
 .PHONY : postgresup postgresdown psql createdb teardown_recreate generate
 
 docker-start:
-	docker start testpgdb
+	docker start iathletedb
 
 docker-stop: 
-	docker stop testpgdb
+	docker stop iathletedb
 
 postgresup:
-	docker run --name testpgdb -v $(PWD):/usr/share/infra -e POSTGRES_PASSWORD=$(DB_PWD) -p 5432:5432 -d $(DB_NAME)
+	docker run --name iathletedb -v $(PWD):/usr/share/infra -e POSTGRES_PASSWORD=$(DB_PWD) -p 5432:5432 -d $(DB_NAME)
 
 postgresdown:
 	docker stop testpgdb  || true && 	docker rm testpgdb || true
@@ -65,7 +65,7 @@ jaeger-run:
 	jaegertracing/all-in-one:1.29.0
 
 psql:
-	docker exec -it testpgdb psql $(PSQLURL)
+	docker exec -it iathletedb psql $(PSQLURL)
 
 # task to create database without typing it manually
 createdb:

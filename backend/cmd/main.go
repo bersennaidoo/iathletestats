@@ -20,6 +20,9 @@ func main() {
 	log.Println("Initializing database")
 	dbHandler := dbconn.InitDatabase(config)
 
+	log.Println("Initializing Prometheus")
+	go server.InitPrometheus()
+
 	log.Println("Initializig HTTP sever")
 	httpServer := server.InitHttpServer(config, dbHandler)
 

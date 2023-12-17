@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/bersennaidoo/iathletestats/backend/domain/models"
+	"github.com/bersennaidoo/iathletestats/backend/infrastructure/metrics"
 	"github.com/bersennaidoo/iathletestats/backend/infrastructure/services"
 	"github.com/gin-gonic/gin"
 )
@@ -25,6 +26,8 @@ func NewRunnersHandler(runnersService *services.RunnersService) *RunnersHandler 
 }
 
 func (rc RunnersHandler) CreateRunner(ctx *gin.Context) {
+
+	metrics.HttpRequestsCounter.Inc()
 
 	body, err := io.ReadAll(ctx.Request.Body)
 	if err != nil {
